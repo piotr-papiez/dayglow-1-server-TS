@@ -1,0 +1,1 @@
+{"version":3,"file":"task.middleware.d.ts","sourceRoot":"","sources":["../../src/middleware/task.middleware.ts"],"names":[],"mappings":"AAIA,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,SAAS,CAAC;AAC9C,OAAO,KAAK,EAAE,kBAAkB,EAAE,MAAM,iCAAiC,CAAC;AAK1E,eAAO,MAAM,gBAAgB,EAAE,cAAc,CAAC,EAAE,EAAE,GAAG,EAAE,kBAAkB,CAgBxE,CAAC"}
