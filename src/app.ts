@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 
+const CLIENT_URL: string = String(process.env.CLIENT_URL);
 const PORT: number = Number(process.env.PORT);
 const MONGODB_URI: string = String(process.env.MONGODB_URI);
 
@@ -20,7 +21,7 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: CLIENT_URL,
     credentials: true
 }));
 
