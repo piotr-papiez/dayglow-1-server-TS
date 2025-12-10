@@ -3,9 +3,10 @@ export const REFRESH_TOKEN_TTL = 30 * 24 * 60 * 60 * 1000;
 
 export const COOKIE_SETTINGS = {
     httpOnly: true,
-    sameSite: "none",
+    sameSite: "lax",
     secure: true,
-    path: "/"
+    path: "/",
+    domain: ".onrender.com"
 } as const;
 
 export const CREATE_USER_STATUS_CODES = {
