@@ -9,7 +9,7 @@ interface UserSchemaType extends Document {
 
 const UserSchema = new Schema<UserSchemaType>({
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 });
 
