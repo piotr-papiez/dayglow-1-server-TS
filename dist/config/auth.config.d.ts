@@ -2,7 +2,7 @@ export declare const ACCESS_TOKEN_TTL: number;
 export declare const REFRESH_TOKEN_TTL: number;
 export declare const COOKIE_SETTINGS: {
     readonly httpOnly: true;
-    readonly sameSite: "lax";
+    readonly sameSite: "none";
     readonly secure: true;
     readonly path: "/";
     readonly domain: ".onrender.com";

@@ -3,7 +3,7 @@ export const REFRESH_TOKEN_TTL = 30 * 24 * 60 * 60 * 1000;
 
 export const COOKIE_SETTINGS = {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
     secure: true,
     path: "/",
     domain: ".onrender.com"
