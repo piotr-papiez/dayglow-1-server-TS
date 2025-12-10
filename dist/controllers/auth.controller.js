@@ -12,11 +12,11 @@ export const registerUser = async (req, res) => {
     try {
         const result = await createUser(registerBody);
         if (!result.ok)
-            return res.status(CREATE_USER_STATUS_CODES[result.message]).json({ error: result.message });
-        return res.status(201).json({ message: "User successfully registered" });
+            return res.status(CREATE_USER_STATUS_CODES[result.message]).json({ result });
+        return res.status(201).json({ result });
     }
     catch (error) {
-        return res.status(500).json({ error: "Server error while registering user" });
+        return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
     }
 };
 // POST: /api/auth/login
@@ -25,14 +25,14 @@ export const loginUser = async (req, res) => {
     try {
         const result = await validateUserCredentials(loginBody);
         if (!result.ok)
-            return res.status(VALIDATE_USER_CREDENTIALS_STATUS_CODES[result.message]).json({ error: result.message });
+            return res.status(VALIDATE_USER_CREDENTIALS_STATUS_CODES[result.message]).json({ result });
         const { userId } = result;
         const tokens = await issueTokens(userId);
         setAuthCookies(res, tokens);
-        return res.status(200).json({ message: "User successfully logged in" });
+        return res.status(200).json({ ok: true });
     }
     catch (error) {
-        return res.status(500).json({ error: "Server error while logging in user" });
+        return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
     }
 };
 // POST: /api/auth/refresh
@@ -41,10 +41,10 @@ export const refreshTokens = async (req, res) => {
     try {
         const tokens = await issueTokens(userId);
         setAuthCookies(res, tokens);
-        return res.status(200).json({ message: "Tokens refreshed" });
+        return res.status(200).json({ ok: true });
     }
     catch (error) {
-        return res.status(500).json({ error: "Server error while refreshing tokens" });
+        return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
     }
 };
 //# sourceMappingURL=auth.controller.js.map

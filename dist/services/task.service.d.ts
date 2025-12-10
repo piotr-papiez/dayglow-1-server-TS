@@ -3,7 +3,7 @@ type DeleteTaskType = {
     ok: true;
 } | {
     ok: false;
-    message: "INVALID_ID" | "NOT_FOUND" | "NO_PERMISSIONS" | "SERVER_ERROR";
+    message: "INVALID_ID" | "USER_NOT_FOUND" | "NO_PERMISSIONS" | "SERVER_ERROR";
 };
 type LoadTasksType = {
     ok: true;

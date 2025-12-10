@@ -1,5 +1,3 @@
-// Constants
-import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL, COOKIE_SETTINGS } from "../config/auth.config.js";
 // Libraries
 import { decodeAccessToken, decodeRefreshToken } from "../lib/jwt.lib.js";
 import xss from "xss";

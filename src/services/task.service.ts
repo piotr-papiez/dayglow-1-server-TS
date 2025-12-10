@@ -10,10 +10,10 @@ import type { TaskSchemaType } from "../models/task.model.js";
 
 type DeleteTaskType =
     | { ok: true }
-    | { ok: false, message: "INVALID_ID" | "NOT_FOUND" | "NO_PERMISSIONS" | "SERVER_ERROR" };
+    | { ok: false, message: "INVALID_ID" | "USER_NOT_FOUND" | "NO_PERMISSIONS" | "SERVER_ERROR" };
 
 type LoadTasksType =
-    | { ok: true, name: string, tasks: TaskSchemaType[] }
+    | { ok: true, tasks: TaskSchemaType[] }
     | { ok: false, message: "USER_NOT_FOUND" | "SERVER_ERROR" };
 
 type SaveTaskType =
@@ -24,7 +24,7 @@ export async function deleteTask(userId: string, taskId: string): Promise<Delete
     if (!Types.ObjectId.isValid(taskId)) return { ok: false, message: "INVALID_ID" };
 
     const task = await Task.findById(taskId);
-    if (!task) return { ok: false, message: "NOT_FOUND" };
+    if (!task) return { ok: false, message: "USER_NOT_FOUND" };
 
     if (!task.userId.equals(userId)) return { ok: false, message: "NO_PERMISSIONS" };
 
@@ -38,19 +38,16 @@ export async function deleteTask(userId: string, taskId: string): Promise<Delete
 }
 
 export async function loadTasks(userId: string): Promise<LoadTasksType> {
-    const user = await User.findById(userId, "name").lean<{ _id: string, name: string }>();
+    const user = await User.findById(userId).lean<{ _id: string, name: string }>();
     if (!user) return { ok: false, message: "USER_NOT_FOUND" };
-    const { name } = user;
 
     try {
-        const tasks = await Task.find({ userId });
+        const tasks = await Task.find({ userId }).sort({ _id: 1 });
 
-        return { ok: true, name, tasks };
+        return { ok: true, tasks };
     } catch (error) {
         return { ok: false, message: "SERVER_ERROR" };
     }
-
-
 }
 
 export async function saveTask(

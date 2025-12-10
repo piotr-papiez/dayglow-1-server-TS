@@ -1,6 +1,3 @@
-// Constants
-import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL, COOKIE_SETTINGS } from "../config/auth.config.js";
-
 // Libraries
 import { decodeAccessToken, decodeRefreshToken } from "../lib/jwt.lib.js";
 import xss from "xss";
@@ -10,10 +7,10 @@ import { User } from "../models/user.model.js";
 
 // Types
 import type { Request, Response, NextFunction, RequestHandler } from "express";
-import type { RegisterBodyType, LoginBodyType } from "../validators/auth.validator.js";
+import type { RegisterBodyType, LoginBodyType, DeleteBodyType } from "../validators/auth.validator.js";
 
 // Validators
-import { loginValidator, registerValidator } from "../validators/auth.validator.js";
+import { loginValidator, registerValidator, deleteValidator } from "../validators/auth.validator.js";
 
 export const validateRegisterBody: RequestHandler<{}, any, RegisterBodyType> = async (req, res, next) => {
     const validatedRequest = registerValidator.safeParse(req.body);
@@ -29,7 +26,7 @@ export const validateRegisterBody: RequestHandler<{}, any, RegisterBodyType> = a
 
 export const validateLoginBody: RequestHandler<{}, any, LoginBodyType> = async (req, res, next) => {
     const validatedRequest = loginValidator.safeParse(req.body);
-    if (!validatedRequest.success) return res.status(400).json({ error: "Validation error — invalid user data" });
+    if (!validatedRequest.success) return res.status(400).json({ ok: false, message: "USER_NOT_FOUND" });
 
     const { email, password } = validatedRequest.data;
 
@@ -37,6 +34,17 @@ export const validateLoginBody: RequestHandler<{}, any, LoginBodyType> = async (
 
     return next();
 };
+
+export const validateDeleteBody: RequestHandler<{}, any, DeleteBodyType> = async (req, res, next) => {
+    const userId = res.locals.userId as string;
+    
+    const validatedRequest = deleteValidator.safeParse({ userId, password: req.body.password });
+    if (!validatedRequest.success) return res.status(400).json({ ok: false, message: "INVALID_PASSWORD" });
+
+    res.locals.password = req.body.password;
+
+    return next();
+}
 
 export const verifyRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
     const refreshToken = req.cookies?.refreshToken as string | undefined;
@@ -65,3 +73,8 @@ export const requireUser = async (req: Request, res: Response, next: NextFunctio
 
     return next();
 };
+
+export const requireCookie = async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.cookies.accessToken) return res.status(401).json({ ok: false, message: "SESSION_EXPIRED" });
+    return next();
+}

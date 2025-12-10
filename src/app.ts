@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 
 // Routes
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 
 const PORT: number = Number(process.env.PORT);
@@ -24,6 +25,7 @@ app.use(cors({
 }));
 
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 app.use("/api", taskRoutes);
 
 // Start server

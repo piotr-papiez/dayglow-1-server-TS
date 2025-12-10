@@ -1,6 +1,6 @@
 export const DELETE_TASK_STATUS_CODES = {
     INVALID_ID: 400,
-    NOT_FOUND: 404,
+    USER_NOT_FOUND: 404,
     NO_PERMISSIONS: 403,
     SERVER_ERROR: 500
 } as const;

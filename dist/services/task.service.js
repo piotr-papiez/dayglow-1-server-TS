@@ -8,7 +8,7 @@ export async function deleteTask(userId, taskId) {
         return { ok: false, message: "INVALID_ID" };
     const task = await Task.findById(taskId);
     if (!task)
-        return { ok: false, message: "NOT_FOUND" };
+        return { ok: false, message: "USER_NOT_FOUND" };
     if (!task.userId.equals(userId))
         return { ok: false, message: "NO_PERMISSIONS" };
     try {

@@ -1,6 +1,6 @@
 export declare const DELETE_TASK_STATUS_CODES: {
     readonly INVALID_ID: 400;
-    readonly NOT_FOUND: 404;
+    readonly USER_NOT_FOUND: 404;
     readonly NO_PERMISSIONS: 403;
     readonly SERVER_ERROR: 500;
 };

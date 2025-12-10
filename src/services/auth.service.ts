@@ -11,7 +11,7 @@ import { RefreshToken } from "../models/refresh-token.model.js";
 import { User } from "../models/user.model.js";
 
 // Types
-import type { LoginBodyType, RegisterBodyType } from "../validators/auth.validator.js";
+import type { LoginBodyType, RegisterBodyType, DeleteBodyType } from "../validators/auth.validator.js";
 
 type CreateUserType =
     | { ok: true }
@@ -20,6 +20,10 @@ type CreateUserType =
 type ValidateUserCredentialsType =
     | { ok: true, userId: string }
     | { ok: false, message: "USER_NOT_FOUND" | "SERVER_ERROR" | "INVALID_PASSWORD" };
+
+type DeleteUserType =
+    | { ok: true }
+    | { ok: false, message: "INVALID_PASSWORD" | "USER_NOT_FOUND" | "SERVER_ERROR" };
 
 export async function createUser(registerBody: RegisterBodyType): Promise<CreateUserType> {
     try {
@@ -66,4 +70,20 @@ export async function issueTokens(userId: string): Promise<{ accessToken: string
     });
 
     return { accessToken, refreshToken };
+}
+
+export async function deleteUser(deleteBody: DeleteBodyType): Promise<DeleteUserType> {
+    try {
+        const userData = await User.findById(deleteBody.userId);
+        if (!userData) return { ok: false, message: "USER_NOT_FOUND" };
+
+        const passwordValid = await verifyPassword(deleteBody.password, userData.password);
+        if (!passwordValid) return { ok: false, message: "INVALID_PASSWORD" };
+
+        await userData.deleteOne();
+
+        return { ok: true };
+    } catch (error) {
+        return { ok: false, message: "SERVER_ERROR" };
+    }
 }

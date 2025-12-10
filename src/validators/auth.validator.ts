@@ -11,5 +11,11 @@ export const loginValidator = z.object({
     password: z.string().min(1)
 });
 
+export const deleteValidator = z.object({
+    userId: z.string(),
+    password: z.string().min(1)
+});
+
 export type RegisterBodyType = z.infer<typeof registerValidator>;
 export type LoginBodyType = z.infer<typeof loginValidator>;
+export type DeleteBodyType = z.infer<typeof deleteValidator>;
