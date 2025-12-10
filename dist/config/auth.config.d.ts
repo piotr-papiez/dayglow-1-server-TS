@@ -15,4 +15,9 @@ export declare const VALIDATE_USER_CREDENTIALS_STATUS_CODES: {
     readonly SERVER_ERROR: 500;
     readonly INVALID_PASSWORD: 401;
 };
+export declare const DELETE_ACCOUNT_STATUS_CODES: {
+    readonly USER_NOT_FOUND: 404;
+    readonly SERVER_ERROR: 500;
+    readonly INVALID_PASSWORD: 401;
+};
 //# sourceMappingURL=auth.config.d.ts.map

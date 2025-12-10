@@ -9,8 +9,8 @@ export const createTask = async (req, res) => {
     try {
         const result = await saveTask(userId, title, description);
         if (!result.ok)
-            return res.status(SAVE_TASK_STATUS_CODES[result.message]).json({ result });
-        return res.status(201).json({ result });
+            return res.status(SAVE_TASK_STATUS_CODES[result.message]).json({ ...result });
+        return res.status(201).json({ ...result });
     }
     catch (error) {
         return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
@@ -22,8 +22,8 @@ export const getTasks = async (req, res) => {
     try {
         const result = await loadTasks(userId);
         if (!result.ok)
-            return res.status(LOAD_TASKS_STATUS_CODES[result.message]).json({ result });
-        return res.status(200).json({ result });
+            return res.status(LOAD_TASKS_STATUS_CODES[result.message]).json({ ...result });
+        return res.status(200).json({ ...result });
     }
     catch (error) {
         return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
@@ -36,8 +36,8 @@ export const finishTask = async (req, res) => {
     try {
         const result = await deleteTask(userId, taskId);
         if (!result.ok)
-            return res.status(DELETE_TASK_STATUS_CODES[result.message]).json({ result });
-        return res.status(200).json({ result });
+            return res.status(DELETE_TASK_STATUS_CODES[result.message]).json({ ...result });
+        return res.status(200).json({ ...result });
     }
     catch (error) {
         return res.status(500).json({ ok: false, message: "SERVER_ERROR" });

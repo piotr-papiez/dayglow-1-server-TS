@@ -15,4 +15,9 @@ export const VALIDATE_USER_CREDENTIALS_STATUS_CODES = {
     SERVER_ERROR: 500,
     INVALID_PASSWORD: 401
 };
+export const DELETE_ACCOUNT_STATUS_CODES = {
+    USER_NOT_FOUND: 404,
+    SERVER_ERROR: 500,
+    INVALID_PASSWORD: 401
+};
 //# sourceMappingURL=auth.config.js.map

@@ -20,13 +20,12 @@ export async function deleteTask(userId, taskId) {
     }
 }
 export async function loadTasks(userId) {
-    const user = await User.findById(userId, "name").lean();
+    const user = await User.findById(userId).lean();
     if (!user)
         return { ok: false, message: "USER_NOT_FOUND" };
-    const { name } = user;
     try {
-        const tasks = await Task.find({ userId });
-        return { ok: true, name, tasks };
+        const tasks = await Task.find({ userId }).sort({ _id: 1 });
+        return { ok: true, tasks };
     }
     catch (error) {
         return { ok: false, message: "SERVER_ERROR" };

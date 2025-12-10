@@ -49,4 +49,19 @@ export async function issueTokens(userId) {
     });
     return { accessToken, refreshToken };
 }
+export async function deleteUser(deleteBody) {
+    try {
+        const userData = await User.findById(deleteBody.userId);
+        if (!userData)
+            return { ok: false, message: "USER_NOT_FOUND" };
+        const passwordValid = await verifyPassword(deleteBody.password, userData.password);
+        if (!passwordValid)
+            return { ok: false, message: "INVALID_PASSWORD" };
+        await userData.deleteOne();
+        return { ok: true };
+    }
+    catch (error) {
+        return { ok: false, message: "SERVER_ERROR" };
+    }
+}
 //# sourceMappingURL=auth.service.js.map

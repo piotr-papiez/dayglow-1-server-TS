@@ -7,7 +7,6 @@ type DeleteTaskType = {
 };
 type LoadTasksType = {
     ok: true;
-    name: string;
     tasks: TaskSchemaType[];
 } | {
     ok: false;

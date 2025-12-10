@@ -6,6 +6,7 @@ import express from "express";
 import mongoose from "mongoose";
 // Routes
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 const PORT = Number(process.env.PORT);
 const MONGODB_URI = String(process.env.MONGODB_URI);
@@ -18,6 +19,7 @@ app.use(cors({
     credentials: true
 }));
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 app.use("/api", taskRoutes);
 // Start server
 async function startServer() {
