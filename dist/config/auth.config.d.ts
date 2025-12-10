@@ -2,10 +2,9 @@ export declare const ACCESS_TOKEN_TTL: number;
 export declare const REFRESH_TOKEN_TTL: number;
 export declare const COOKIE_SETTINGS: {
     readonly httpOnly: true;
-    readonly sameSite: "none";
+    readonly sameSite: "lax";
     readonly secure: true;
     readonly path: "/";
-    readonly domain: "dayglow-ts.onrender.com";
 };
 export declare const CREATE_USER_STATUS_CODES: {
     readonly ALREADY_EXISTS: 409;
