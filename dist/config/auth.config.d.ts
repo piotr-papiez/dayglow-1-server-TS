@@ -5,6 +5,7 @@ export declare const COOKIE_SETTINGS: {
     readonly sameSite: "none";
     readonly secure: true;
     readonly path: "/";
+    readonly domain: "dayglow-ts.onrender.com";
 };
 export declare const CREATE_USER_STATUS_CODES: {
     readonly ALREADY_EXISTS: 409;

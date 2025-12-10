@@ -6,6 +6,7 @@ export const COOKIE_SETTINGS = {
     sameSite: "none",
     secure: true,
     path: "/",
+    domain: "dayglow-ts.onrender.com"
 } as const;
 
 export const CREATE_USER_STATUS_CODES = {
