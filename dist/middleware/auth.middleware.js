@@ -34,23 +34,23 @@ export const verifyRefreshToken = async (req, res, next) => {
     const refreshToken = req.cookies?.refreshToken;
     const userId = decodeRefreshToken(refreshToken);
     if (!userId)
-        return res.status(401).json({ error: "Unauthorized — Invalid or missing refreshToken" });
+        return res.status(401).json({ ok: false, message: "INVALID_OR_MISSING_REFRESHTOKEN" });
     try {
         const userData = await User.findById(userId);
         if (!userData)
-            return res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ ok: false, message: "USER_NOT_FOUND" });
         res.locals.userId = userId;
         return next();
     }
     catch (error) {
-        return res.status(500).json({ error: "Server error while verifying refresh token" });
+        return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
     }
 };
 export const requireUser = async (req, res, next) => {
     const accessToken = req.cookies.accessToken;
     const userId = decodeAccessToken(accessToken);
     if (!userId)
-        return res.status(401).json({ error: "Unauthorized — Invalid or missing accessToken" });
+        return res.status(401).json({ ok: false, message: "TOKEN_EXPIRED" });
     res.locals.userId = userId;
     return next();
 };

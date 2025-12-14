@@ -50,16 +50,16 @@ export const verifyRefreshToken = async (req: Request, res: Response, next: Next
     const refreshToken = req.cookies?.refreshToken as string | undefined;
 
     const userId = decodeRefreshToken(refreshToken);
-    if (!userId) return res.status(401).json({ error: "Unauthorized — Invalid or missing refreshToken" });
+    if (!userId) return res.status(401).json({ ok: false, message: "INVALID_OR_MISSING_REFRESHTOKEN" });
 
     try {
         const userData = await User.findById(userId)
-        if (!userData) return res.status(404).json({ error: "User not found" });
+        if (!userData) return res.status(404).json({ ok: false, message: "USER_NOT_FOUND" });
 
         res.locals.userId = userId;
         return next();
     } catch (error) {
-        return res.status(500).json({ error: "Server error while verifying refresh token" });
+        return res.status(500).json({ ok: false, message: "SERVER_ERROR" });
     }
 };
 
@@ -67,7 +67,7 @@ export const requireUser = async (req: Request, res: Response, next: NextFunctio
     const accessToken = req.cookies.accessToken as string | undefined;
     const userId = decodeAccessToken(accessToken);
 
-    if (!userId) return res.status(401).json({ error: "Unauthorized — Invalid or missing accessToken" });
+    if (!userId) return res.status(401).json({ ok: false, message: "TOKEN_EXPIRED" });
 
     res.locals.userId = userId;
 
