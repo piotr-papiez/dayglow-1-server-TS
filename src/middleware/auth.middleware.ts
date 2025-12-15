@@ -50,7 +50,7 @@ export const verifyRefreshToken = async (req: Request, res: Response, next: Next
     const refreshToken = req.cookies?.refreshToken as string | undefined;
 
     const userId = decodeRefreshToken(refreshToken);
-    if (!userId) return res.status(401).json({ ok: false, message: "INVALID_OR_MISSING_REFRESHTOKEN" });
+    if (!userId) return res.status(403).json({ ok: false, message: "INVALID_OR_MISSING_REFRESHTOKEN" });
 
     try {
         const userData = await User.findById(userId)
